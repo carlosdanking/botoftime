@@ -1,3 +1,6 @@
+from time import sleep
+sleep(1200)
+
 from logging import basicConfig, log, INFO, WARN, ERROR, CRITICAL
 from pathlib import Path
 from random import randbytes
@@ -66,7 +69,7 @@ async def welcome(client: Client, message: Message):
   await data.set_new_key("join_date",datetime.now(),user_id)
   await message.reply("🤖 Bienvenido al bot de administración de suscripciones del canal **🥇 SEASON PREMIUM 🥇**")
 
-@bot.on_message(filters.chat(-1002061583172))
+@bot.on_message(filters.chat(-1002104846511))
 async def chat_group(client: Client, message: Message):
   if message.from_user:
     user_id = message.from_user.id
@@ -78,7 +81,7 @@ async def chat_group(client: Client, message: Message):
     if username != user.get("username"):
       await data.set_new_key("username",username,user_id)
 
-@bot.on_chat_member_updated(filters.chat(-1002099762277))
+@bot.on_chat_member_updated(filters.chat(-1002028336751))
 async def register(client: Client, message: Message):
   if message.new_chat_member:
     if message.new_chat_member.user:
@@ -106,8 +109,8 @@ async def verify_not_expire_user():
       user_profile = f"<a href='tg://user?id={user_id}'><b>{first_name}</b></a>"
     else:
       user_profile = f"**@{user_name}**"
-    await bot.send_message(-1002061583172,f"🤖 Admin **@CiberV** ya han pasado 30 días desde que el usuario {user_profile} se unió al canal!")
-    await bot.send_message(-1002061583172,f"⛔️ Usuario {user_profile} ya ha completado su mes en nuestro canal 🤖, tendrá que contratar una nueva suscripción mensual en nuestro bot **@SeasonPremium_bot** si desea continuar en el canal.")
+    await bot.send_message(-1002104846511,f"🤖 Admin **@CiberV** ya han pasado 30 días desde que el usuario {user_profile} se unió al canal!")
+    await bot.send_message(-1002104846511,f"⛔️ Usuario {user_profile} ya ha completado su mes en nuestro canal 🤖, tendrá que contratar una nueva suscripción mensual en nuestro bot **@SeasonPremium_bot** si desea continuar en el canal.")
   
 @async_e
 def heartbeat():
@@ -122,7 +125,7 @@ def heartbeat():
 
 
 log(INFO, "Starting...")
-bot.loop.create_task(heartbeat())
+#bot.loop.create_task(heartbeat())
 scheduler.add_job(verify_not_expire_user,"interval",seconds=300)
 scheduler.start()
 bot.run()
